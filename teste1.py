@@ -31,15 +31,99 @@ def click_image(image_path, confidence=0.9):
             print("Imagem não encontrada na tela. Aguardando...")
         pyautogui.sleep(1)
 
-def confirmacao_na_tela(image_path, confidence=0.9):
+def confirmacao_codigo(image_path, confidence=0.9):
     current_dir = os.path.dirname(__file__)  # Diretório atual do script
     caminho_imagem = caminho + r'\IMAGENS'
-    image_path = os.path.join(current_dir, caminho_imagem, image_path) 
+    image_path = os.path.join(current_dir, caminho_imagem, image_path)
     while True:
         try:
             position = pyautogui.locateOnScreen(image_path, confidence=confidence)
             if position:
                 print("Imagem foi confirmada na tela.")
+                break
+        except Exception as e:
+            print("Imagem não confirmada na tela. Aguardando...")
+        pyautogui.sleep(1)
+
+def confirmacao_na_tela(image_path,image_path2,image_path3, confidence=0.9):
+    current_dir = os.path.dirname(__file__)  # Diretório atual do script
+    caminho_imagem = caminho + r'\IMAGENS'
+    image_path = os.path.join(current_dir, caminho_imagem, image_path)
+    image_path2 = os.path.join(current_dir, caminho_imagem, image_path2) 
+    image_path3 = os.path.join(current_dir, caminho_imagem, image_path3)
+    while True:
+        try:
+            position = pyautogui.locateOnScreen(image_path, confidence=confidence)
+            if position:
+                print("Imagem foi confirmada na tela.")
+                break
+        except Exception as e:
+            print("Imagem não confirmada na tela. Aguardando...")
+        
+        try:
+            position2 = pyautogui.locateOnScreen(image_path2, confidence=confidence)
+            if position2:
+                center_x = position2.left + position2.width // 2
+                center_y = position2.top + position2.height // 2
+                pyautogui.click(center_x, center_y)
+                print("Imagem foi confirmada na tela.")
+                caminho_do_arquivo = 'Base_canhotos.xlsx'
+                nome_da_aba = 'Plan1'
+                wb = load_workbook(caminho_do_arquivo)
+                ws = wb[nome_da_aba]
+                coluna_lancamento = 'B'  
+                if linha > ws.max_row:
+                    ws[coluna_lancamento + str(linha_especifica)] = ''
+                else:
+                    ws[coluna_lancamento + str(linha_especifica)] = ''
+                coluna_lancamento = 'C'  
+                if linha > ws.max_row:
+                    ws[coluna_lancamento + str(linha_especifica)] = ''
+                else:
+                    ws[coluna_lancamento + str(linha_especifica)] = ''
+                coluna_status = 'D'  
+                if linha > ws.max_row:
+                    ws[coluna_status + str(linha_especifica)] = 'JA LANCADO'
+                else:
+                    ws[coluna_status + str(linha_especifica)] = 'JA LANCADO'
+                wb.save(caminho_do_arquivo)
+                wb.close()
+                click_image('cancelar.png')
+                break
+        except Exception as e:
+            print("Imagem não confirmada na tela. Aguardando...")
+        pyautogui.sleep(1)
+
+
+        try:
+            position3 = pyautogui.locateOnScreen(image_path3, confidence=confidence)
+            if position3:
+                center_x = position3.left + position3.width // 2
+                center_y = position3.top + position3.height // 2
+                pyautogui.click(center_x, center_y)
+                print("Imagem foi confirmada na tela.")
+                caminho_do_arquivo = 'Base_canhotos.xlsx'
+                nome_da_aba = 'Plan1'
+                wb = load_workbook(caminho_do_arquivo)
+                ws = wb[nome_da_aba]
+                coluna_lancamento = 'B'  
+                if linha > ws.max_row:
+                    ws[coluna_lancamento + str(linha_especifica)] = ''
+                else:
+                    ws[coluna_lancamento + str(linha_especifica)] = ''
+                coluna_lancamento = 'C'  
+                if linha > ws.max_row:
+                    ws[coluna_lancamento + str(linha_especifica)] = ''
+                else:
+                    ws[coluna_lancamento + str(linha_especifica)] = ''
+                coluna_status = 'D'  
+                if linha > ws.max_row:
+                    ws[coluna_status + str(linha_especifica)] = 'CTE NAO ENCONTRADO OU CAMPO EM BRANCO'
+                else:
+                    ws[coluna_status + str(linha_especifica)] = 'CTE NAO ENCONTRADO OU CAMPO EM BRANCO'
+                wb.save(caminho_do_arquivo)
+                wb.close()
+                click_image('cancelar.png')
                 break
         except Exception as e:
             print("Imagem não confirmada na tela. Aguardando...")
@@ -129,7 +213,7 @@ click_image('botao_protocolo.png')
 click_image('botao_protocolo_lancamento.png')
 click_image('incluir.png')
 click_image('janela_geral.png')
-confirmacao_na_tela('codigo_automatico.png')
+confirmacao_codigo('codigo_automatico.png')
 click_info_lancamento('usuario_destino.png')
 pyautogui.write('FOGACA2')
 pyautogui.press('tab')
@@ -152,6 +236,10 @@ pyautogui.press('tab')
 click_image('salvar.png')
 protocolo = salvar_lancamento('codigo_automatico.png')
 click_image('janela_documento.png')
+
+
+
+
 
 numero_linhas = len(Planilha_canhoto)
 #print(numero_linhas)
@@ -196,7 +284,7 @@ for i, linha in enumerate(Planilha_canhoto.index):
     pyautogui.press('tab')
     click_image('setinha_verde.png')
     pyautogui.sleep(1)
-    confirmacao_na_tela('confirmacao_inclusao.png')
+    confirmacao_na_tela('confirmacao_inclusao.png','no.png', 'ok.png')
 
 click_image('janela_geral.png')
 click_image('enviar.png')
@@ -205,4 +293,6 @@ pyautogui.sleep(5)
 click_image('sair.png')
 click_image('yes.png')
 
+pyautogui.sleep(5)
+print('Terminou :)')
 
