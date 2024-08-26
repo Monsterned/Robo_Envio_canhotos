@@ -6,7 +6,6 @@ import pyautogui
 import ctypes
 from datetime import datetime
 import pyautogui
-from selenium.webdriver.common.action_chains import ActionChains
 import shutil
 from datetime import datetime, timedelta
 import pyperclip
@@ -244,7 +243,7 @@ if windows:
     app.top_window().set_focus()
 else:
     print("A janela do Visual Rodopar não foi encontrada.")
-    
+
 click_image('botao_util.png')
 click_image('botao_util_acessar.png')
 click_image('botao_protocolo.png')
